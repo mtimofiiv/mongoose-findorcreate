@@ -1,8 +1,22 @@
 language: node_js
 node_js:
-  - 4
-  - 5
-  - 6
-  - 7
+  - '7.2.1'
+env:
+  - CXX=g++-4.8
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+cache:
+  apt: true
+  directories:
+    - node_modules
 services:
   - mongodb
+before_script:
+  - sleep 15
+  - mongo fixturedb --eval 'db.addUser("travis", "test");'
+notifications:
+  email: false
