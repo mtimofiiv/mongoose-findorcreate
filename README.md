@@ -1,4 +1,4 @@
-# mongoose-findorcreate ![Travis](https://img.shields.io/travis/mtimofiiv/mongoose-findorcreate.svg)]
+# mongoose-findorcreate ![Travis](https://img.shields.io/travis/mtimofiiv/mongoose-findorcreate.svg)
 
 A plugin for Mongoose which adds the findOrCreate method to models. The method will either append an existing object or save a new one, depending on wether it finds it or not.
 
