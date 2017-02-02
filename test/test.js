@@ -16,8 +16,16 @@ const FruitSchema = new Schema({
   name: { type: String },
   color: { type: String },
   tags: [],
-  servingIdeas: [ServeSchema]
+  servingIdeas: [ServeSchema],
+  slug: { type: String }
 })
+
+FruitSchema.path('slug').validate(value => {
+  if (!value) return true
+  if (value.length < 10) return true
+
+  return false
+}, 'Slug is too long')
 
 FruitSchema.plugin(findOrCreate)
 
@@ -143,6 +151,24 @@ describe('#findOrCreate()', () => {
         expect(result.servingIdeas[1]).to.equal(undefined)
 
         expect(result._id.toString()).to.equal(grapefruitId.toString())
+
+        done()
+    })
+
+  })
+
+  it('passes on any settings (like validateBeforeSave) to the save() method', done => {
+
+    Fruit.findOrCreate(
+      { name: 'Pear', slug: 'my-super-long-pear-slug' },
+      {},
+      { saveOptions: { validateBeforeSave: false } },
+
+      (err, result) => {
+        expect(err).to.equal(null)
+
+        expect(result.name).to.equal('Pear')
+        expect(result.slug).to.equal('my-super-long-pear-slug')
 
         done()
     })

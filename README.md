@@ -38,7 +38,7 @@ You can pass an `options` object when adding the plugin to a schema or directly 
 
 ```js
 // Like so...
-MySchema.plugin(findOrCreate, { appendToArray: true })
+MySchema.plugin(findOrCreate, { appendToArray: true, saveOptions: { validateBeforeSave: false } })
 
 // And/or like so:
 MyModel.findOrCreate({ name: 'Mike' }, { slug: 'mike' }, { appendToArray: true }, (err, result) => {
@@ -46,7 +46,10 @@ MyModel.findOrCreate({ name: 'Mike' }, { slug: 'mike' }, { appendToArray: true }
 })
 ```
 
-The only option for the moment is `appendToArray`. If this is set to `true`, then if your field is an array, including a subdocument, your additional information will be appended rather than overwriting the currently existing value.
+The possible options are:
+
+ * `appendToArray`: if a field in the existing doc is an array, we can overwrite it (`false`) or merely append to it (`true`)
+ * `saveOptions`: this object will be passed to the `save()` method as a set of options
 
 ## Testing
 
