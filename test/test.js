@@ -66,6 +66,7 @@ describe('#findOrCreate()', () => {
       expect(result.color).to.equal('red')
 
       expect(isNew).to.be.true
+      expect(wasUpdated).to.be.true
 
       done()
     })
@@ -92,6 +93,7 @@ describe('#findOrCreate()', () => {
       expect(result.name).to.equal('Grapefruit')
 
       expect(isNew).to.be.false
+      expect(wasUpdated).to.be.false
 
       expect(result._id.toString()).to.equal(grapefruitId.toString())
 
@@ -109,8 +111,22 @@ describe('#findOrCreate()', () => {
       expect(result.color).to.equal('ruby')
 
       expect(isNew).to.be.false
+      expect(wasUpdated).to.be.true
 
       expect(result._id.toString()).to.equal(grapefruitId.toString())
+
+      done()
+    })
+
+  })
+
+  it('doesn\'t perform a save if not required', done => {
+
+    Fruit.findOrCreate({ name: 'Grapefruit' }, { color: 'ruby' }, (err, result, wasUpdated, isNew) => {
+      expect(err).to.equal(null)
+
+      expect(isNew).to.be.false
+      expect(wasUpdated).to.be.false
 
       done()
     })
