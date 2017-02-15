@@ -59,11 +59,14 @@ describe('#findOrCreate()', () => {
 
   it('creates a new record when just the query is provided', done => {
 
-    Fruit.findOrCreate({ name: 'Apple', color: 'red' }, (err, result) => {
+    Fruit.findOrCreate({ name: 'Apple', color: 'red' }, (err, result, wasUpdated, isNew) => {
       expect(err).to.equal(null)
 
       expect(result.name).to.equal('Apple')
       expect(result.color).to.equal('red')
+
+      expect(isNew).to.be.true
+      expect(wasUpdated).to.be.true
 
       done()
     })
@@ -84,10 +87,13 @@ describe('#findOrCreate()', () => {
 
   it('finds an existing record when just the query is provided', done => {
 
-    Fruit.findOrCreate({ name: 'Grapefruit' }, (err, result) => {
+    Fruit.findOrCreate({ name: 'Grapefruit' }, (err, result, wasUpdated, isNew) => {
       expect(err).to.equal(null)
 
       expect(result.name).to.equal('Grapefruit')
+
+      expect(isNew).to.be.false
+      expect(wasUpdated).to.be.false
 
       expect(result._id.toString()).to.equal(grapefruitId.toString())
 
@@ -98,13 +104,29 @@ describe('#findOrCreate()', () => {
 
   it('appends an existing record', done => {
 
-    Fruit.findOrCreate({ name: 'Grapefruit' }, { color: 'ruby' }, (err, result) => {
+    Fruit.findOrCreate({ name: 'Grapefruit' }, { color: 'ruby' }, (err, result, wasUpdated, isNew) => {
       expect(err).to.equal(null)
 
       expect(result.name).to.equal('Grapefruit')
       expect(result.color).to.equal('ruby')
 
+      expect(isNew).to.be.false
+      expect(wasUpdated).to.be.true
+
       expect(result._id.toString()).to.equal(grapefruitId.toString())
+
+      done()
+    })
+
+  })
+
+  it('doesn\'t perform a save if not required', done => {
+
+    Fruit.findOrCreate({ name: 'Grapefruit' }, { color: 'ruby' }, (err, result, wasUpdated, isNew) => {
+      expect(err).to.equal(null)
+
+      expect(isNew).to.be.false
+      expect(wasUpdated).to.be.false
 
       done()
     })
