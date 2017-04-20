@@ -50,6 +50,7 @@ The possible options are:
 
  * `appendToArray`: if a field in the existing doc is an array, we can overwrite it (`false`) or merely append to it (`true`)
  * `saveOptions`: this object will be passed to the `save()` method as a set of options
+ * `saveIfFound`: default is `true` - if set to `false`, it will do creates where all data is saved, and will merely return the doc if it exists and not save the second parameter's fields.
 
 ## Testing
 
