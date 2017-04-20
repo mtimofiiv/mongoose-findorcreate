@@ -197,6 +197,24 @@ describe('#findOrCreate()', () => {
 
   })
 
+  it('does not save to an existing doc if saveIfFound is false', done => {
+
+    Fruit.findOrCreate(
+      { name: 'Grapefruit' },
+      { color: 'salmon' },
+      { saveIfFound: false },
+
+      (err, result) => {
+        expect(err).to.equal(null)
+
+        expect(result.name).to.equal('Grapefruit')
+        expect(result.color).not.to.equal('salmon')
+
+        done()
+    })
+
+  })
+
 })
 
 after(done => {
