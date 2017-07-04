@@ -1,6 +1,6 @@
 {
   "name": "mongoose-find-or-create",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "A plugin for Mongoose which adds the findOrCreate method to models. The method will either append an existing object or save a new one, depending on wether it finds it or not.",
   "main": "index.js",
   "scripts": {
